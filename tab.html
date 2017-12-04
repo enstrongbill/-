@@ -1,0 +1,50 @@
+<!-- tab选项卡原生写法 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tab</title>
+    <style>
+        #div1 div{
+            width: 200px;
+            height: 200px;
+            border: 1px solid red;
+            display: none;
+        }
+        .active{
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1">
+        <input type="button" class="active" value="1">
+        <input type="button" value="2">
+        <input type="button" value="3">
+        <div style="display:block">1111</div>
+        <div>2222</div>
+        <div>3333</div>
+    </div>
+   
+    <script>
+    var div1=document.getElementById('div1');
+    var oInput=div1.getElementsByTagName('input');
+    var oDIv=div1.getElementsByTagName('div');
+
+    for(var i=0;i<oInput.length;i++){
+        oInput[i].index=i;
+        oInput[i].onclick=function(){
+            for(var i=0;i<oInput.length;i++){
+                oInput[i].className='';
+                oDIv[i].style.display='none';
+            }
+            this.className='active';
+            oDIv[this.index].style.display='block';
+
+            
+        }
+    }
+    
+    </script>
+</body>
+</html>
