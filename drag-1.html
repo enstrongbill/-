@@ -1,0 +1,57 @@
+//jquery拖拽插件的写法
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/lib/jquery-3.2.1.min.js"></script>
+    <style>
+       div{
+           width:100px;
+           height: 100px;
+           background: rgba(0, 255, 157, 0.733);
+           position: absolute;
+       }
+    </style>
+    <script>
+        $.fn.extend({
+             drag:function(){
+                var objectX=0;
+                var objectY=0;
+                var self=this;
+                this.mousedown(function(event){
+                    var objectX=event.pageX-$(this).offset().left;
+                    var objectY=event.pageY-$(this).offset().top;
+                    console.log('mousedown');
+                    $(document).mousemove(function(event){
+                        console.log('mousemove');
+                        
+                        self.css('left',event.pageX-objectX);
+                        self.css('top',event.pageY-objectY);
+                    })
+
+                    $(document).mouseup(function(){
+                        console.log('mouseup');
+                        $(document).off();
+                    })
+
+                    return false;
+                }) 
+             }
+            }
+          );      
+    </script>
+    <script>     
+        $(function(){
+            $('div').drag();
+        })
+    </script>
+</head>
+<body>
+   <div>1</div>
+   
+   
+</body>
+</html>
