@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/lib/jquery-3.2.1.min.js"></script>
+    <title>drag</title>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+        }
+
+    </style>
+    <script>
+        $(function(){
+            var objectX=0;
+            var objectY=0;
+            $('div').mousedown(function(event){
+                //获取鼠标在元素内部距离两边的距离
+                objectX=event.pageX-$(this).offset().left;
+                objectY=event.pageY-$(this).offset().top;
+                //用document是防止鼠标移动太快从而脱离了元素
+                $(document).mousemove(function(event){
+                    $('div').css('left',event.pageX-objectX);
+                    $('div').css('top',event.pageY-objectY);
+                })
+
+                $(document).mouseup(function(){
+                    $(document).off();
+                })
+                
+            })
+            return false;
+           
+        })
+    </script>
+</head>
+<body>
+    <div></div>
+</body>
+</html>
