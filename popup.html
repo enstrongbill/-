@@ -1,0 +1,60 @@
+<!-- jquery 版本弹窗 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>popupWindow</title>
+    <script src="js/lib/jquery-3.2.1.min.js"></script>
+    <style>
+        body{
+            height: 1000px;
+        }
+        #popWindow{
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            padding: 20px;
+            position: relative;
+        }
+        #popWindow #close{
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    
+    </style>
+    <script>
+        $(function(){
+            // 动态创建弹窗
+            var popupWindow=$('<div id="popWindow"><p>用户名<input type="text"></p><p>密码<input type="text"></p><div id="close">X</div></div>');
+            var $popBtn=$('#popBtn');
+            $popBtn.click(function(){
+                $('body').append(popupWindow);
+                // 用滚动条时还是固定在中间,最好不要在最后动态的绑定一个scroll事件，这样子窗口滚动的时候是会跳动的
+                popupWindow.css('position','fixed');
+                popupWindow.css('left',($(window).width()-$('#popWindow').outerWidth())/2);
+                popupWindow.css('top',($(window).height()-$('#popWindow').outerHeight())/2);
+                // 关闭
+                $('#close').click(function(){
+                popupWindow.remove();
+            })
+            $(window).bind('resize',function(){
+                popupWindow.css('left',($(window).width()-$('#popWindow').width())/2);
+                popupWindow.css('top',($(window).height()-$('#popWindow').height())/2);
+            })
+            // $(window).on('resize scroll',function(){
+            //     popupWindow.css('left',($(window).width()-$('#popWindow').width())/2);
+            //     popupWindow.css('top',($(window).height()-$('#popWindow').height())/2+$(window).scrollTop());
+            // })
+            // })
+            
+           
+           
+        })
+    
+    </script>
+</head>
+<body>
+    <input type="button" value="弹窗" id="popBtn">  
+</body>
+</html>
