@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>arrow</title>
+    
+
+</head>
+
+<body>
+    <canvas id='canvas' width="500" height="500"></canvas>
+    <script>
+        window.onload = function () {
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            var mouse = utils.captureMouse(canvas);
+            var arrow = new Arrow();
+
+            arrow.x = canvas.width / 2;
+            arrow.y = canvas.height / 2;
+
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame, canvas);
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                var dx = mouse.x - arrow.x;
+                var dy = mouse.y - arrow.y;
+                arrow.rotation = Math.atan2(dy, dx);
+                arrow.draw(context);
+            })();
+
+        }
+        var utils = {}; 
+        // 获取鼠标相对于某元素的位置
+        utils.captureMouse = function (element) {
+            var mouse = { x: 0, y: 0 }; element.addEventListener('mousemove',
+                function (event) {
+                    var x, y;
+                    if (event.pageX || event.pageY) {
+                        x = event.pageX;
+                        y = event.pageY;
+                    } else {
+                        x = event.clientX +
+                            document.body.scrollLeft;
+                        y = event.clientY + document.body.scrollTop;
+                    }
+                    x -= element.offsetLeft;
+                    y -= element.offsetTop;
+                    mouse.x = x;
+                    mouse.y = y;
+                }, false);
+            return mouse;
+        }
+
+
+        function Arrow() {
+            this.x = 0;
+            this.y = 0;
+            this.color = '#cecece';
+            this.rotation = 0;
+        }
+        Arrow.prototype.draw = function (context) {
+            context.save();
+            context.translate(this.x, this.y);
+            context.rotate(this.rotation);
+            context.fillStyle = this.color;
+            context.beginPath();
+            context.moveTo(-50, -25);
+            context.moveTo(0, -25);
+            context.lineTo(0, -50);
+            context.lineTo(50, 0);
+            context.lineTo(0, 50);
+            context.lineTo(0, 25);
+            context.lineTo(-50, 25);
+            context.lineTo(-50, -25);
+            context.closePath();
+            context.fill();
+            context.stroke();
+
+            context.restore();
+        }
+    </script>
+</body>
+
+</html>
